@@ -1,0 +1,37 @@
+USE [megoorderslocaldb]
+GO
+
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+/* Создание таблицы */
+CREATE TABLE [dbo].[Orders] (
+    [Id]    INT           IDENTITY (1, 1) NOT NULL,
+    [Price] INT           NOT NULL,
+    [Date]  DATETIME2 (7) NOT NULL
+);
+
+
+/* Заполнение таблицы начальными данными */
+INSERT [dbo].[Orders] VALUES (560, CAST(N'2021-10-1 10:34:09.000' AS DateTime) ) 
+INSERT [dbo].[Orders] VALUES (550, CAST(N'2021-10-5 10:34:09.000' AS DateTime) ) 
+INSERT [dbo].[Orders] VALUES (700, CAST(N'2021-10-10 10:34:09.000' AS DateTime) ) 
+INSERT [dbo].[Orders] VALUES (710, CAST(N'2021-10-18 10:34:09.000' AS DateTime) ) 
+INSERT [dbo].[Orders] VALUES (330, CAST(N'2021-11-25 10:34:09.000' AS DateTime) )
+
+INSERT [dbo].[Orders] VALUES (1001, CAST(N'2021-11-1 10:34:09.000' AS DateTime) ) 
+INSERT [dbo].[Orders] VALUES (2002, CAST(N'2021-11-2 10:34:09.000' AS DateTime) ) 
+INSERT [dbo].[Orders] VALUES (2033, CAST(N'2021-11-3 10:34:09.000' AS DateTime) ) 
+INSERT [dbo].[Orders] VALUES (2005, CAST(N'2021-11-4 10:34:09.000' AS DateTime) ) 
+INSERT [dbo].[Orders] VALUES (3003, CAST(N'2021-11-5 10:34:09.000' AS DateTime) ) 
+INSERT [dbo].[Orders] VALUES (4004, CAST(N'2021-11-5 10:34:09.000' AS DateTime) ) 
+INSERT [dbo].[Orders] VALUES (3200, CAST(N'2021-11-5 10:34:09.000' AS DateTime) ) 
+INSERT [dbo].[Orders] VALUES (4560, CAST(N'2021-11-6 10:34:09.000' AS DateTime) ) 
+INSERT [dbo].[Orders] VALUES (5000, CAST(N'2021-11-7 10:34:09.000' AS DateTime) ) 
+INSERT [dbo].[Orders] VALUES (4999, CAST(N'2021-11-8 10:34:09.000' AS DateTime) )
+INSERT [dbo].[Orders] VALUES (5500, CAST(N'2021-11-8 10:34:09.000' AS DateTime) ) 
+INSERT [dbo].[Orders] VALUES (6000, CAST(N'2021-11-8 10:34:09.000' AS DateTime) ) 
+INSERT [dbo].[Orders] VALUES (6500, CAST(N'2021-11-8 10:34:09.000' AS DateTime) ) 
