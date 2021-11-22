@@ -7,6 +7,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Mego.travel.Test_WebReport_Excel.Models; // пространство имен моделей
+using Microsoft.EntityFrameworkCore;
 
 namespace Mego.travel.Test_WebReport_Excel
 {
@@ -23,6 +25,10 @@ namespace Mego.travel.Test_WebReport_Excel
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
+
+            // Добавляю строку подключения и контекст данных
+            string connection = Configuration.GetConnectionString("DefaultConnection");
+            services.AddDbContext<OrderContext>(options => options.UseSqlServer(connection));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
