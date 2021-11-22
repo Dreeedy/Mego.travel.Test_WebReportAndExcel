@@ -1,13 +1,8 @@
 ﻿@{
-    Layout = null;
+    ViewData["Title"] = "Добавление заказа";
 }
 
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Добавление заказа</title>
-</head>
-<body>
+<div class="text-left">
     <div>
         <h3>Форма добавления заказа</h3>
         <p>Для добавления заказа заполните следующие поля:</p>
@@ -22,9 +17,8 @@
                     <td><input type="datetime-local" name="Date" /></td>
                 </tr>
                 <tr><td><input type="submit" value="Отправить" /> </td><td></td></tr>
-            </table>
-        </form>
+            </table>            
+        </form>    
         <a href="~/Home/Index/">На главную</a>
     </div>
-</body>
-</html>
+</div>
