@@ -11,19 +11,19 @@
         </div>
         <table>
             <tr>
-                <td>Модель</td>
-                <td>Производитель</td>
-                <td>Цена</td>
+                <td>Идентификатор</td>
+                <td>Сумма заказа</td>
+                <td>Дата заказа</td>
                 <td></td>
             </tr>
-            @foreach (var phone in Model)
+            @foreach (var order in Model)
             {
                 <tr>
-                    <td>@phone.Id</td>
-                    <td>@phone.Price</td>
-                    <td>@phone.Date</td>
-                    <td><a href="~/Home/Buy/@phone.Id">Редактировать</a></td>
-                    <td><a href="~/Home/Buy/@phone.Id">Удалить</a></td>
+                    <td>@order.Id</td>
+                    <td>@order.Price</td>
+                    <td>@order.Date</td>
+                    <td><a href="~/Home/Update/@order.Id">Редактировать</a></td>
+                    <td><a href="~/Home/Delete/@order.Id">Удалить</a></td>
                 </tr>
             }
         </table>

@@ -48,17 +48,28 @@ namespace Mego.travel.Test_WebReport_Excel
 
             app.UseAuthorization();
 
+            // роут для Read
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
             });
+
+            // роут для Create
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
                     name: "create",
                     pattern: "{controller=Home}/{action=Create}");
+            });
+
+            // роут для Update
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapControllerRoute(
+                    name: "update",
+                    pattern: "{controller=Home}/{action=Update}/{id}");
             });
         }
     }

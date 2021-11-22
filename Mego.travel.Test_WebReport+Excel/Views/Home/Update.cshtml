@@ -1,0 +1,33 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Редактирование заказа</title>
+</head>
+<body>
+    <div>
+        <h3>Форма редактирования заказа</h3>
+        <p>Форма редактирования заказа:</p>
+        <form method="post">
+            <table>
+                <tr>
+                    <td>Идентификатор заказа:</td>
+                    <td><input type="number" name="Id" value="@ViewBag.OrderId" readonly/></td>
+                </tr>
+                <tr>
+                    <td>Сумма заказа:</td>
+                    <td><input type="number" name="Price" value="@ViewBag.OrderPrice"/></td>
+                </tr>
+                <tr>
+                    <td>Дата заказа:</td>
+                    <td><input type="datetime" name="Date" value="@ViewBag.OrderDate"/></td>
+                </tr>
+                <tr><td><input type="submit" value="Отправить"/> </td><td></td></tr>
+            </table>
+        </form>
+    </div>
+</body>
+</html>

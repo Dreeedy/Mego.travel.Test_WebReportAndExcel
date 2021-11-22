@@ -32,7 +32,7 @@ namespace Mego.travel.Test_WebReport_Excel.Controllers
         [HttpPost]
         public IActionResult Create(Order order)// Метод с формы получает новый order
         {
-            _orderContext.Orders.Add(order);
+            _orderContext.Orders.Update(order);
 
             // сохраняем в бд все изменения
             _orderContext.SaveChanges();
@@ -45,31 +45,31 @@ namespace Mego.travel.Test_WebReport_Excel.Controllers
         }
 
         [HttpGet]
-        public IActionResult Update(int? id)
+        public IActionResult Update(int id)// метод передает данные из Index в Update
         {
-            if (id == null) return RedirectToAction("Index");
             ViewBag.OrderId = id;
+            var order = _orderContext.Orders.Find(id);
+            ViewBag.OrderPrice = order.Price;
+            ViewBag.OrderDate = order.Date;
             return View();
         }
         [HttpPost]
-        public string Update(Order order)
+        public IActionResult Update(Order order)// метод принимает обновленные данные от формы и сохраняет изменения
         {
-            _orderContext.Orders.Add(order);
-
+            _orderContext.Orders.Update(order);
 
             // сохраняем в бд все изменения
             _orderContext.SaveChanges();
-            return "200";
+            return RedirectToAction("Index");
         }
 
         [HttpGet]
         public IActionResult Delete(int? id)
         {
-            if (id == null) return RedirectToAction("Index");
             ViewBag.OrderId = id;
-            return View();
+            return RedirectToAction("Index");
         }
-        [HttpPost]
+        /*[HttpPost]
         public string Delete(Order order)
         {
             _orderContext.Orders.Add(order);
@@ -78,7 +78,7 @@ namespace Mego.travel.Test_WebReport_Excel.Controllers
             // сохраняем в бд все изменения
             _orderContext.SaveChanges();
             return "200";
-        }
+        }*/
 
         public IActionResult Privacy()
         {
