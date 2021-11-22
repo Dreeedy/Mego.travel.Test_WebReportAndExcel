@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -10,8 +11,10 @@ namespace Mego.travel.Test_WebReport_Excel.Models
     /// </summary>
     public class Order
     {
-        public int Id { get; set; }        
+        public int Id { get; set; }   
+        
         public int Price { get; set; }
+
         public DateTime Date { get; set; }
     }
 }
