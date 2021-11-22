@@ -19,7 +19,7 @@ namespace Mego.travel.Test_WebReport_Excel.Models
             // Поэтому в конструктор MobileContext определен вызов Database.EnsureCreated(),
             // который при отсутствии базы данных автоматически создает ее.
             // Если база данных уже есть, то ничего не происходит.
-            Database.EnsureCreated();
+            //Database.EnsureCreated(); // Закомментирован тк вызовет конфликт с миграциями
         }
     }
 }
