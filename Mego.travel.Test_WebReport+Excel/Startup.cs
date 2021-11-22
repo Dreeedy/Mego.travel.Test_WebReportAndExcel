@@ -71,6 +71,14 @@ namespace Mego.travel.Test_WebReport_Excel
                     name: "update",
                     pattern: "{controller=Home}/{action=Update}/{id}");
             });
+
+            // роут для Delete
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapControllerRoute(
+                    name: "delete",
+                    pattern: "{controller=Home}/{action=Delete}/{id}");
+            });
         }
     }
 }

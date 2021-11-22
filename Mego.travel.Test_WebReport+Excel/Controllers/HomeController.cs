@@ -34,8 +34,8 @@ namespace Mego.travel.Test_WebReport_Excel.Controllers
         {
             _orderContext.Orders.Update(order);
 
-            // сохраняем в бд все изменения
             _orderContext.SaveChanges();
+
             return RedirectToAction("Index");
         }
 
@@ -51,6 +51,7 @@ namespace Mego.travel.Test_WebReport_Excel.Controllers
             var order = _orderContext.Orders.Find(id);
             ViewBag.OrderPrice = order.Price;
             ViewBag.OrderDate = order.Date;
+
             return View();
         }
         [HttpPost]
@@ -58,27 +59,21 @@ namespace Mego.travel.Test_WebReport_Excel.Controllers
         {
             _orderContext.Orders.Update(order);
 
-            // сохраняем в бд все изменения
             _orderContext.SaveChanges();
+
             return RedirectToAction("Index");
         }
 
         [HttpGet]
-        public IActionResult Delete(int? id)
+        public IActionResult Delete(int id)
         {
             ViewBag.OrderId = id;
+            var order = _orderContext.Orders.Find(id);
+            _orderContext.Orders.Remove(order);
+            _orderContext.SaveChanges();
+
             return RedirectToAction("Index");
         }
-        /*[HttpPost]
-        public string Delete(Order order)
-        {
-            _orderContext.Orders.Add(order);
-
-
-            // сохраняем в бд все изменения
-            _orderContext.SaveChanges();
-            return "200";
-        }*/
 
         public IActionResult Privacy()
         {
