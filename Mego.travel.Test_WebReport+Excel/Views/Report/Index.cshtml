@@ -1,0 +1,28 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Создание отчета</title>
+</head>
+<body>
+    <div>
+        <h3>Форма создания отчета</h3>
+        <form method="post" action="~/Report/Index">
+            <table>
+                <tr>
+                    <td>Дата заказа с:</td>
+                    <td><input type="datetime-local" name="StartDate" /></td>
+                </tr>
+                <tr>
+                    <td>Дата заказа по:</td>
+                    <td><input type="datetime-local" name="EndDate" /></td>
+                </tr>
+                <tr><td><input type="submit" value="Скачать отчет" /> </td><td></td></tr>
+            </table>
+        </form>
+    </div>
+</body>
+</html>
