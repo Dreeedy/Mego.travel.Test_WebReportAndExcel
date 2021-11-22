@@ -27,7 +27,12 @@ namespace Mego.travel.Test_WebReport_Excel.Controllers
         {
             return View();
         }
-
+        /// <summary>
+        /// Роут создает отчет и выдает его в формате xlsx
+        /// </summary>
+        /// <param name="startDate"></param>
+        /// <param name="endDate"></param>
+        /// <returns></returns>
         [HttpPost]
         public IActionResult Index(DateTime? startDate, DateTime? endDate)
         {
@@ -50,11 +55,11 @@ namespace Mego.travel.Test_WebReport_Excel.Controllers
                 #region Body
                 var orders = _orderContext.Orders;
 
-                if (isDateIndicated)
+                if (isDateIndicated)// если указали обе даты
                 {                   
                     SetBetweenOrders(orders, ref workshhet, ref currentRow, startDate, endDate);                    
                 }
-                if(!isDateIndicated)
+                if(!isDateIndicated)// ели обе даты не указали
                 {
                     SetAllOrders(orders, ref workshhet, ref currentRow);
                 }
@@ -84,99 +89,139 @@ namespace Mego.travel.Test_WebReport_Excel.Controllers
                 }
             }            
         }
+
+        /// <summary>
+        /// Метод устаналивает заголовки в exel и стили
+        /// </summary>
+        /// <param name="workshhet"></param>
+        /// <param name="currentRow"></param>
         private void SetHeaders(ref IXLWorksheet workshhet, int currentRow)
         {
             workshhet.Cell(currentRow, column: 1).Value = "Дата";
+            workshhet.Cell(currentRow, column: 1).Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Center;
+
             workshhet.Cell(currentRow, column: 2).Value = "Количество заказов с суммой от 0 до 1000";
+            workshhet.Cell(currentRow, column: 2).Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Center;
+
             workshhet.Cell(currentRow, column: 3).Value = "Количество заказов с суммой от 1001 до 5000";
+            workshhet.Cell(currentRow, column: 3).Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Center;
+
             workshhet.Cell(currentRow, column: 4).Value = "Количество заказов с суммой от 5001";
+            workshhet.Cell(currentRow, column: 4).Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Center;
+
+            workshhet.Column(1).Width = 20;
+
+            workshhet.Column(2).Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Center;
+            workshhet.Column(2).Width = 40;
+
+            workshhet.Column(3).Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Center;
+            workshhet.Column(3).Width = 40;
+
+            workshhet.Column(4).Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Center;
+            workshhet.Column(4).Width = 40;
         }
+
+        /// <summary>
+        /// Метод заполняет exel всеми заказами
+        /// </summary>
+        /// <param name="orders"></param>
+        /// <param name="workshhet"></param>
+        /// <param name="currentRow"></param>
         private void SetAllOrders(DbSet<Order> orders, ref IXLWorksheet workshhet, ref int currentRow)
         {
-            foreach (var order in orders)
-            {
-                currentRow++;
-                if (order.Price > 0 & order.Price <= 1000)
-                {
-                    workshhet.Cell(currentRow, column: 2).Value = 1;
-                }
-                if (order.Price >= 1001 & order.Price <= 5000)
-                {
-                    workshhet.Cell(currentRow, column: 3).Value = 1;
-                }
-                if (order.Price >= 5001)
-                {
-                    workshhet.Cell(currentRow, column: 4).Value = 1;
-                }
-
-                workshhet.Cell(currentRow, column: 1).Value = order.Date;
-            }
+            GroupOrders(orders, ref workshhet, ref currentRow);
         }
+
+        /// <summary>
+        /// Метод заполняет exel заказами позже даты
+        /// </summary>
+        /// <param name="orders"></param>
+        /// <param name="workshhet"></param>
+        /// <param name="currentRow"></param>
+        /// <param name="startDate"></param>
         private void SetLeftOrders(DbSet<Order> orders, ref IXLWorksheet workshhet, ref int currentRow, DateTime? startDate)
         {
             var leftOrders = orders.Where(o => o.Date >= startDate);
-            foreach (var order in leftOrders)
-            {
-                currentRow++;
-                if (order.Price > 0 & order.Price <= 1000)
-                {
-                    workshhet.Cell(currentRow, column: 2).Value = 1;
-                }
-                if (order.Price >= 1001 & order.Price <= 5000)
-                {
-                    workshhet.Cell(currentRow, column: 3).Value = 1;
-                }
-                if (order.Price >= 5001)
-                {
-                    workshhet.Cell(currentRow, column: 4).Value = 1;
-                }
 
-                workshhet.Cell(currentRow, column: 1).Value = order.Date;
-            }
+            GroupOrders(leftOrders, ref workshhet, ref currentRow);
         }
+
+        /// <summary>
+        /// Метод заполняет exel заказами раньше даты
+        /// </summary>
+        /// <param name="orders"></param>
+        /// <param name="workshhet"></param>
+        /// <param name="currentRow"></param>
+        /// <param name="endDate"></param>
         private void SetRightOrders(DbSet<Order> orders, ref IXLWorksheet workshhet, ref int currentRow, DateTime? endDate)
         {
             var rightOrders = orders.Where(o => o.Date <= endDate);
-            foreach (var order in rightOrders)
-            {
-                currentRow++;
-                if (order.Price > 0 & order.Price <= 1000)
-                {
-                    workshhet.Cell(currentRow, column: 2).Value = 1;
-                }
-                if (order.Price >= 1001 & order.Price <= 5000)
-                {
-                    workshhet.Cell(currentRow, column: 3).Value = 1;
-                }
-                if (order.Price >= 5001)
-                {
-                    workshhet.Cell(currentRow, column: 4).Value = 1;
-                }
 
-                workshhet.Cell(currentRow, column: 1).Value = order.Date;
-            }
-        }
+            GroupOrders(rightOrders, ref workshhet, ref currentRow);
+        }        
+
+        /// <summary>
+        /// Метод заполняет exel заказами между двух дат
+        /// </summary>
+        /// <param name="orders"></param>
+        /// <param name="workshhet"></param>
+        /// <param name="currentRow"></param>
+        /// <param name="startDate"></param>
+        /// <param name="endDate"></param>
         private void SetBetweenOrders(DbSet<Order> orders, ref IXLWorksheet workshhet, ref int currentRow, DateTime? startDate, DateTime? endDate)
         {
             var betweenOrders = orders.Where(o => o.Date >= startDate & o.Date <= endDate);
-            foreach (var order in betweenOrders)
-            {
-                currentRow++;
-                if (order.Price > 0 & order.Price <= 1000)
-                {
-                    workshhet.Cell(currentRow, column: 2).Value = 1;
-                }
-                if (order.Price >= 1001 & order.Price <= 5000)
-                {
-                    workshhet.Cell(currentRow, column: 3).Value = 1;
-                }
-                if (order.Price >= 5001)
-                {
-                    workshhet.Cell(currentRow, column: 4).Value = 1;
-                }
 
-                workshhet.Cell(currentRow, column: 1).Value = order.Date;
+            GroupOrders(betweenOrders, ref workshhet, ref currentRow);
+        }
+
+        /// <summary>
+        /// Метод группирует заказы по дате и цене и заполняет ячейки exel
+        /// </summary>
+        /// <param name="orders"></param>
+        /// <param name="workshhet"></param>
+        /// <param name="currentRow"></param>
+        private void GroupOrders(IQueryable<Order> orders, ref IXLWorksheet workshhet, ref int currentRow)
+        {
+            DateTime lastDate = new DateTime();
+            foreach (var order in orders)
+            {
+                if (lastDate != order.Date)
+                {
+                    currentRow++;
+
+                    var phoneGroups = orders.GroupBy(p => new { p.Date, p.Price })
+                            .Where(g => g.Key.Date == order.Date && g.Key.Price > 0 && g.Key.Price <= 1000)
+                            .Select(g => new { g.Key.Date, g.Key.Price });
+
+                    if (phoneGroups.Count() > 0)
+                    {
+                        workshhet.Cell(currentRow, column: 2).Value = phoneGroups.Count();
+                    }
+
+                    phoneGroups = orders.GroupBy(p => new { p.Date, p.Price })
+                            .Where(g => g.Key.Date == order.Date && g.Key.Price >= 1001 && g.Key.Price <= 5000)
+                            .Select(g => new { g.Key.Date, g.Key.Price });
+
+                    if (phoneGroups.Count() > 0)
+                    {
+                        workshhet.Cell(currentRow, column: 3).Value = phoneGroups.Count();
+                    }
+
+                    phoneGroups = orders.GroupBy(p => new { p.Date, p.Price })
+                            .Where(g => g.Key.Date == order.Date && g.Key.Price >= 5001)
+                            .Select(g => new { g.Key.Date, g.Key.Price });
+
+                    if (phoneGroups.Count() > 0)
+                    {
+                        workshhet.Cell(currentRow, column: 4).Value = phoneGroups.Count();
+                    }
+
+                    lastDate = order.Date;
+                    workshhet.Cell(currentRow, column: 1).Value = order.Date;
+                }
             }
         }
+
     }
 }
