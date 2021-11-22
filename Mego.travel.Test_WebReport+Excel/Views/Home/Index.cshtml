@@ -1,8 +1,31 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
+﻿@model IEnumerable<Mego.travel.Test_WebReport_Excel.Models.Order>
+@{
+    ViewData["Title"] = "Заказы";
 }
 
 <div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    <div>
+        <h3>Заказы</h3>
+        <div>
+            <a href="~/Home/Buy/">Создать</a>
+        </div>
+        <table>
+            <tr>
+                <td>Модель</td>
+                <td>Производитель</td>
+                <td>Цена</td>
+                <td></td>
+            </tr>
+            @foreach (var phone in Model)
+            {
+                <tr>
+                    <td>@phone.Id</td>
+                    <td>@phone.Price</td>
+                    <td>@phone.Date</td>
+                    <td><a href="~/Home/Buy/@phone.Id">Редактировать</a></td>
+                    <td><a href="~/Home/Buy/@phone.Id">Удалить</a></td>
+                </tr>
+            }
+        </table>
+    </div>
 </div>
