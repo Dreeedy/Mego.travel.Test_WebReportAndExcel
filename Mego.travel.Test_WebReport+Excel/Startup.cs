@@ -54,6 +54,12 @@ namespace Mego.travel.Test_WebReport_Excel
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
             });
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapControllerRoute(
+                    name: "create",
+                    pattern: "{controller=Home}/{action=Create}");
+            });
         }
     }
 }

@@ -1,0 +1,29 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Добавление заказа</title>
+</head>
+<body>
+    <div>
+        <h3>Форма добавления заказа</h3>
+        <p>Для добавления заказа заполните следующие поля:</p>
+        <form method="post">
+            <table>
+                <tr>
+                    <td>Сумма заказа:</td>
+                    <td><input type="number" name="Price" /></td>
+                </tr>
+                <tr>
+                    <td>Дата заказа:</td>
+                    <td><input type="datetime-local" name="Date" /></td>
+                </tr>
+                <tr><td><input type="submit" value="Отправить" /> </td><td></td></tr>
+            </table>
+        </form>
+    </div>
+</body>
+</html>

@@ -25,21 +25,18 @@ namespace Mego.travel.Test_WebReport_Excel.Controllers
         }
 
         [HttpGet]
-        public IActionResult Create(int? id)
+        public IActionResult Create()// метод открывает нам страницу с формой форму Create
         {
-            if (id == null) return RedirectToAction("Index");
-            ViewBag.OrderId = id;
             return View();
         }
         [HttpPost]
-        public string Create(Order order)
+        public IActionResult Create(Order order)// Метод с формы получает новый order
         {
             _orderContext.Orders.Add(order);
 
-
             // сохраняем в бд все изменения
             _orderContext.SaveChanges();
-            return "200";
+            return RedirectToAction("Index");
         }
 
         public IActionResult Index()
